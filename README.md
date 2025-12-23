@@ -4,10 +4,10 @@ This repository demonstrates the concepts of batching and Key-Value (KV) caching
 
 ## Project Structure
 
-- `batching_01.py`: Defines a `Batching` class that encapsulates the model and tokenizer, providing a method for generating tokens.
+- `inference_wrapper.py`: Defines a `Batching` class that encapsulates the model and tokenizer, providing a method for generating tokens.
 - `download_model.py`: A helper script to download and save the GPT-2 model locally. This avoids repeated downloads.
-- `example_01.py`: **Naive Generation**. Demonstrates token generation *without* KV caching. This is inefficient because the model re-processes the entire history at each step.
-- `kv_cache_example.py`: **Efficient Generation**. Demonstrates token generation *with* KV caching. This is much faster because it reuses the computation from previous steps.
+- `naive_generation.py`: **Naive Generation**. Demonstrates token generation *without* KV caching. This is inefficient because the model re-processes the entire history at each step.
+- `kv_cache_generation.py`: **Efficient Generation**. Demonstrates token generation *with* KV caching. This is much faster because it reuses the computation from previous steps.
 
 ## Setup
 
@@ -31,10 +31,10 @@ This repository demonstrates the concepts of batching and Key-Value (KV) caching
 
 ### 1. Naive Generation (Slow)
 
-Run `example_01.py` to see how text generation works without optimization. Observe the time it takes.
+Run `naive_generation.py` to see how text generation works without optimization. Observe the time it takes.
 
 ```bash
-python example_01.py
+python naive_generation.py
 ```
 
 Process:
@@ -46,10 +46,10 @@ Process:
 
 ### 2. Efficient Generation with KV Cache (Fast)
 
-Run `kv_cache_example.py` to see the performance improvement using KV caching.
+Run `kv_cache_generation.py` to see the performance improvement using KV caching.
 
 ```bash
-python kv_cache_example.py
+python kv_cache_generation.py
 ```
 
 Process:
@@ -64,5 +64,5 @@ Process:
 ### KV Caching
 In Transformer models, the Attention mechanism computes "Keys" and "Values" for each token. When generating text sequentially, the Keys and Values for past tokens don't change. By caching them (`past_key_values` in Hugging Face), we avoid re-calculating them, leading to significant speedups, especially for long sequences.
 
-### Batching (referenced in `batching_01.py`)
-While `batching_01.py` sets up the structure, the examples primarily focus on the sequential generation part. Batching usually involves processing multiple distinct sequences in parallel to maximize GPU utilization.
+### Batching (referenced in `inference_wrapper.py`)
+While `inference_wrapper.py` sets up the structure, the examples primarily focus on the sequential generation part. Batching usually involves processing multiple distinct sequences in parallel to maximize GPU utilization.

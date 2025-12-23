@@ -6,7 +6,7 @@ It measures and prints the time taken for generation to demonstrate the ineffici
 """
 
 import matplotlib.pyplot as plt
-import np
+import numpy as np
 import time
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
